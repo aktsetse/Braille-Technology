@@ -76,8 +76,33 @@ final class BrailleMappingTests: XCTestCase {
     func testTwentySixLettersMapped() {
         let alphabet = "abcdefghijklmnopqrstuvwxyz"
         let mapped = (0..<64).compactMap { BrailleMapping.map($0) }
+
         for letter in alphabet {
-            XCTAssertTrue(mapped.contains(letter), "Missing mapping for '\(letter)'")
+            XCTAssertTrue(
+                mapped.contains(letter),
+                "Missing mapping for '\(letter)'"
+            )
         }
+    }
+
+    func testEveryBrailleLetterHasUniquePattern() {
+        var mappings: [Character: Int] = [:]
+
+        for bitmask in 0..<64 {
+            if let letter = BrailleMapping.map(bitmask) {
+                XCTAssertNil(
+                    mappings[letter],
+                    "Letter '\(letter)' is mapped by more than one Braille pattern"
+                )
+
+                mappings[letter] = bitmask
+            }
+        }
+
+        XCTAssertEqual(
+            mappings.count,
+            26,
+            "Expected exactly 26 unique alphabetic Braille mappings"
+        )
     }
 }
