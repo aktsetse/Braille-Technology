@@ -213,6 +213,46 @@ Sources/SenseLayer/
 └── Views/           BrailleAccessOverlayView, BrailleDotsView, ContentView, OverlaySubViews
 ```
 
+## Accessibility Design Principles
+
+Braille Technology is designed around nonvisual interaction from the ground up,
+rather than adapting a primarily visual interface after the fact.
+
+### Touch-First Interaction
+
+Core workflows are designed to be completed without relying on visual or auditory
+feedback. Navigation, reading, composing, confirmation, and error states can all
+be communicated through touch.
+
+### Distinguishable Haptic Feedback
+
+Different system events use intentionally distinct tactile patterns. Navigation,
+activation, errors, successful actions, urgency levels, and Braille characters
+should remain distinguishable without requiring a visual reference.
+
+### Two-Way Accessible Communication
+
+Accessibility should support creation as well as consumption. The interface
+therefore supports both tactile message reading and six-dot Braille composition.
+
+### Progressive Information Depth
+
+Users receive concise information first and can intentionally request additional
+detail. This reduces unnecessary cognitive load while keeping the user in control
+of how much information they consume.
+
+### Privacy by Architecture
+
+Sensitive message processing is designed around local and on-device computation,
+minimizing unnecessary transmission of private communication.
+
+### Testable Accessibility Behavior
+
+Accessibility interactions are treated as application behavior rather than UI
+decoration. Haptic events, Braille mappings, navigation states, and error
+conditions are isolated behind testable abstractions so they can be verified
+deterministically.
+
 ### Key Design Decisions
 
 - **Pure logic first, UI last.** All state transitions, draft persistence, send behavior, and braille mapping are unit-tested without any UI dependency.
